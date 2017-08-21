@@ -51,10 +51,10 @@ legend({'Theoretical impulse response', '10s Estimation', '100s Estimation'});
 % be shifted.
 N = 1000;                           % 10 secs
 % First : Shift the frequency axis.
-Cuu10_b = fftshift(Cuu10_b);
-Cuy10_b = fftshift(Cuy10_b);
-Cuu10_un = fftshift(Cuu10_un);
-Cuy10_un = fftshift(Cuy10_un);
+Cuu10_b = fftshift(Cuu10_b/dt);
+Cuy10_b = fftshift(Cuy10_b/dt);
+Cuu10_un = fftshift(Cuu10_un/dt);
+Cuy10_un = fftshift(Cuy10_un/dt);
 % Second : DFT
 f = (1/dt) * (0:.5:N-1) / N;        % N*df=1/dt, The length of the f-axis is
 Suu10_b = fft(Cuu10_b);             % twice as long.
@@ -71,3 +71,10 @@ subplot(212);
 loglog(f, abs(Suy10_b), 'r');hold on;
 loglog(f, abs(Suy10_un), 'g');hold on;
 xlabel('f [Hz]');title('Suy');legend({'SuyBiased','SuyUnbiased'});
+
+%% Task 1.4.p Prove that Suy(w)=G(w).*Suu(w)
+f1 = f * 1i;
+G = 1./(0.025*(f1.^2+0.015*f1+1)); G=G';
+figure;
+subplot(211);loglog(f, abs(Suu10_b.*G), 'g');
+subplot(212);loglog(f, abs(Suy10_b), 'b');
