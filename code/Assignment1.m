@@ -2,7 +2,7 @@
 
 clear all;
 close all;
-sim('LinearWhiteNoise'); % Run the model
+sim('..\sim\LinearWhiteNoise.slx'); % Run the model
 whos;
 
 % TD = Time Domain; FD = Frequency Domain
